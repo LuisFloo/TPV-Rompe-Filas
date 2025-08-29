@@ -197,16 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cameraFeed = document.getElementById('camera-feed') as HTMLVideoElement;
 
     // App state
-    let shoppingCart: CartItem[] = [
-        { product: MOCK_PRODUCTS.find(p => p.id === 1242)!, quantity: 1 },
-        { 
-            product: MOCK_PRODUCTS.find(p => p.id === 32)!, 
-            quantity: 4 ,
-            discount: { percentage: 25, description: '25% de descuento' }
-        },
-        { product: MOCK_PRODUCTS.find(p => p.id === 42)!, quantity: 3 },
-        { product: MOCK_PRODUCTS.find(p => p.id === 53221)!, quantity: 1 },
-    ];
+    let shoppingCart: CartItem[] = [];
     let partialReturnCart: CartItem[] = [];
     let cameraStream: MediaStream | null = null;
     let cameraMode: 'purchase' | 'consultation' | 'return' = 'purchase';
