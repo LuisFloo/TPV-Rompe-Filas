@@ -387,7 +387,7 @@
             <!-- Pantalla de Pago de Devolución -->
             <div id="devolucion-pago-screen" class="screen">
                 <div class="payment-content">
-                    <p class="payment-title">Total a cobrar</p>
+                    <p class="payment-title">Total a devolver</p>
                     <h1 id="devolucion-pago-total-amount" class="payment-total">$5,153.00 MXN</h1>
                     <div class="payment-instructions">
                         <p>INSERTE/APROXIME/DESLICE</p>
@@ -495,18 +495,20 @@
             
             <!-- Pantalla de Devolución Parcial - Escanear Productos -->
             <div id="devolucion-parcial-scan-screen" class="screen">
-                <header>
+                <header id="devolucion-parcial-header">
                     <h1 class="title">Escanea los productos a devolver</h1>
                 </header>
-                <div class="devolucion-parcial-content">
+                <div id="devolucion-parcial-list-container" class="devolucion-parcial-content">
                     <!-- Scanned products will appear here -->
                 </div>
                 <div class="screen-footer">
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" id="devolucion-escanear-btn">Escanear producto</button>
-                        <button class="btn btn-secondary" id="devolucion-sku-btn">Ingresar SKU</button>
-                        <button class="btn btn-secondary" id="devolucion-parcial-cancelar-btn">Cancelar</button>
-                    </div>
+                     <button class="btn btn-primary" id="devolucion-escanear-btn">Escanear producto</button>
+                     <button class="btn btn-secondary" id="devolucion-sku-btn">Ingresar SKU</button>
+                     <button class="btn btn-secondary" id="devolucion-parcial-cancelar-btn">Cancelar</button>
+                     <div class="split-buttons hidden" id="devolucion-parcial-split-actions">
+                         <button class="btn btn-secondary" id="devolucion-parcial-cancelar-split-btn">Cancelar</button>
+                         <button class="btn btn-secondary" id="devolucion-parcial-continuar-btn">Continuar</button>
+                     </div>
                 </div>
             </div>
 
@@ -680,6 +682,15 @@
         <div class="modal-actions">
             <button class="btn btn-primary" id="confirm-cancellation-btn">Cancelar compra</button>
             <button class="btn btn-secondary" id="go-back-from-cancellation-btn">Regresar</button>
+        </div>
+    </div>
+
+    <div id="cancel-return-modal" class="modal">
+        <div class="modal-handle"></div>
+        <p class="modal-confirmation-text">¿Estás seguro de cancelar la devolución?</p>
+        <div class="modal-actions">
+            <button class="btn btn-primary" id="confirm-cancel-return-btn">Cancelar devolución</button>
+            <button class="btn btn-secondary" id="go-back-from-return-btn">Regresar</button>
         </div>
     </div>
 

@@ -1,4 +1,5 @@
 
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -31,7 +32,7 @@ interface ReturnTransaction {
 // Mock Data
 const MOCK_PRODUCTS: Product[] = [
     { id: 1242, name: 'Playera Azul', price: 300.50 },
-    { id: 32, name: 'Pantalón Gris', price: 500.00 },
+    { id: 32, name: 'Pantalón Gris', price: 375.00 },
     { id: 42, name: 'Camisa blanca', price: 200.50 },
     { id: 230, name: 'Zapatos Negros', price: 800.00 },
     { id: 56, name: 'Vestido Floral', price: 750.00 },
@@ -171,15 +172,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelReturnRejectedBtn = document.getElementById('cancel-return-rejected-btn');
 
     // Devolucion Parcial Scan Screen elements
+    const devolucionParcialHeader = document.getElementById('devolucion-parcial-header');
+    const devolucionParcialListContainer = document.getElementById('devolucion-parcial-list-container');
     const devolucionEscanearBtn = document.getElementById('devolucion-escanear-btn');
     const devolucionSkuBtn = document.getElementById('devolucion-sku-btn');
     const devolucionParcialCancelarBtn = document.getElementById('devolucion-parcial-cancelar-btn');
+    const devolucionParcialSplitActions = document.getElementById('devolucion-parcial-split-actions');
+    const devolucionParcialCancelarSplitBtn = document.getElementById('devolucion-parcial-cancelar-split-btn');
+    const devolucionParcialContinuarBtn = document.getElementById('devolucion-parcial-continuar-btn');
 
     // Cancellation confirmation modal elements
     const cancellationConfirmationModal = document.getElementById('cancellation-confirmation-modal');
     const confirmCancellationBtn = document.getElementById('confirm-cancellation-btn');
     const goBackFromCancellationBtn = document.getElementById('go-back-from-cancellation-btn');
     const finalizeCancellationBtn = document.getElementById('finalize-cancellation-btn');
+
+    // Cancel Return Modal elements
+    const cancelReturnModal = document.getElementById('cancel-return-modal');
+    const confirmCancelReturnBtn = document.getElementById('confirm-cancel-return-btn');
+    const goBackFromReturnBtn = document.getElementById('go-back-from-return-btn');
 
     // Camera elements
     const cameraView = document.getElementById('camera-view');
@@ -196,12 +207,15 @@ document.addEventListener('DOMContentLoaded', () => {
         { product: MOCK_PRODUCTS.find(p => p.id === 42)!, quantity: 3 },
         { product: MOCK_PRODUCTS.find(p => p.id === 53221)!, quantity: 1 },
     ];
+    let partialReturnCart: CartItem[] = [];
     let cameraStream: MediaStream | null = null;
     let cameraMode: 'purchase' | 'consultation' | 'return' = 'purchase';
     let skuProducts: Product[] = [];
     let currentProductForDetails: Product | null = null;
     let currentTransactionForReturn: ReturnTransaction | null = null;
     let isCheckoutView = false;
+    let currentReturnMode: 'total' | 'partial' = 'total';
+    let onConfirmCancelReturn: (() => void) | null = null;
     
     const currencyFormatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -351,11 +365,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function addSkuProductsToCart() {
+        const targetCart = cameraMode === 'return' ? partialReturnCart : shoppingCart;
+        const renderFunction = cameraMode === 'return' ? renderPartialReturnCart : renderCart;
+        const addFunction = cameraMode === 'return' ? addProductToPartialReturn : addProductToCart;
+
         skuProducts.forEach(product => {
-            addProductToCart(product);
+            addFunction(product);
         });
         hideSkuModal();
-        renderCart();
+        renderFunction();
     }
 
     function showSkuModal() {
@@ -420,6 +438,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- Cancel Return Modal Logic ---
+    function showCancelReturnModal(onConfirm: () => void) {
+        onConfirmCancelReturn = onConfirm;
+        if (modalOverlay && cancelReturnModal) {
+            modalOverlay.classList.add('active');
+            cancelReturnModal.classList.add('active');
+        }
+    }
+
+    function hideCancelReturnModal() {
+        onConfirmCancelReturn = null;
+        if (modalOverlay && cancelReturnModal) {
+            modalOverlay.classList.remove('active');
+            cancelReturnModal.classList.remove('active');
+        }
+    }
 
     // --- Compra Screen Logic ---
     function handleQuantityChange(event: Event) {
@@ -587,6 +621,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return subtotal - totalDiscounts;
     }
 
+    function calculatePartialReturnTotal() {
+        return partialReturnCart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+    }
+
     function showPaymentScreen() {
         const total = calculateTotal();
         if (paymentTotalAmountEl) {
@@ -611,6 +649,54 @@ document.addEventListener('DOMContentLoaded', () => {
         cancelPurchase(); // This already clears the cart and resets the view
         switchTab('compra-screen'); // Ensure we are back on the main tab
     }
+    
+    // --- Devolucion Parcial Logic ---
+    function renderPartialReturnCart() {
+        if (!devolucionParcialListContainer || !devolucionParcialHeader || !devolucionParcialCancelarBtn || !devolucionParcialSplitActions) return;
+
+        devolucionParcialListContainer.innerHTML = '';
+        
+        if (partialReturnCart.length === 0) {
+            devolucionParcialHeader.classList.remove('hidden');
+            devolucionParcialCancelarBtn.classList.remove('hidden');
+            devolucionParcialSplitActions.classList.add('hidden');
+        } else {
+            devolucionParcialHeader.classList.add('hidden');
+            devolucionParcialCancelarBtn.classList.add('hidden');
+            devolucionParcialSplitActions.classList.remove('hidden');
+            
+            partialReturnCart.forEach(item => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'return-item-wrapper';
+                const itemSubtotal = item.product.price * item.quantity;
+
+                wrapper.innerHTML = `
+                    <div class="return-item-details">
+                        <div class="return-item-info">
+                            <p class="name">${item.product.name}</p>
+                            <p class="details">SKU: ${item.product.id}</p>
+                            <p class="details">Unidades: ${item.quantity}</p>
+                        </div>
+                        <div class="return-item-pricing">
+                            <p class="price">${currencyFormatter.format(itemSubtotal)}</p>
+                        </div>
+                    </div>
+                `;
+                devolucionParcialListContainer.appendChild(wrapper);
+            });
+        }
+    }
+    
+    function addProductToPartialReturn(product: Product) {
+        const existingItem = partialReturnCart.find(item => item.product.id === product.id);
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            partialReturnCart.push({ product: product, quantity: 1 });
+        }
+        renderPartialReturnCart();
+    }
+
 
     // --- Devoluciones Logic ---
     function showDevolucionDetalle(transaction: ReturnTransaction) {
@@ -632,17 +718,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showDevolucionPagoScreen() {
-        if (currentTransactionForReturn && devolucionPagoTotalAmountEl) {
-            devolucionPagoTotalAmountEl.textContent = `${currencyFormatter.format(currentTransactionForReturn.amount)} MXN`;
-            showScreen('devolucion-pago-screen');
+        if (!devolucionPagoTotalAmountEl) return;
+        
+        let total = 0;
+        if (currentReturnMode === 'total' && currentTransactionForReturn) {
+            total = currentTransactionForReturn.amount;
+        } else if (currentReturnMode === 'partial') {
+            total = calculatePartialReturnTotal();
         }
+
+        devolucionPagoTotalAmountEl.textContent = `${currencyFormatter.format(total)} MXN`;
+        showScreen('devolucion-pago-screen');
     }
 
     function showDevolucionCompletaScreen() {
-        if (currentTransactionForReturn && devolucionCompletaTotalAmountEl) {
-            devolucionCompletaTotalAmountEl.textContent = currencyFormatter.format(currentTransactionForReturn.amount);
-            showScreen('devolucion-completa-screen');
+        if (!devolucionCompletaTotalAmountEl) return;
+        
+        let total = 0;
+        if (currentReturnMode === 'total' && currentTransactionForReturn) {
+            total = currentTransactionForReturn.amount;
+        } else if (currentReturnMode === 'partial') {
+            total = calculatePartialReturnTotal();
         }
+        
+        devolucionCompletaTotalAmountEl.textContent = currencyFormatter.format(total);
+        showScreen('devolucion-completa-screen');
     }
 
     function showDevolucionRechazadaScreen() {
@@ -651,6 +751,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function finalizeReturn() {
         currentTransactionForReturn = null;
+        partialReturnCart = [];
         const devolucionesForm = document.getElementById('devoluciones-form') as HTMLFormElement;
         if (devolucionesForm) {
             devolucionesForm.reset();
@@ -686,12 +787,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const partialBtn = document.createElement('button');
             partialBtn.className = 'btn btn-lavender';
             partialBtn.textContent = 'Devolución parcial';
-            partialBtn.addEventListener('click', () => showScreen('devolucion-parcial-scan-screen'));
+            partialBtn.addEventListener('click', () => {
+                currentReturnMode = 'partial';
+                partialReturnCart = [];
+                renderPartialReturnCart();
+                showScreen('devolucion-parcial-scan-screen');
+            });
 
             const totalBtn = document.createElement('button');
             totalBtn.className = 'btn btn-lavender';
             totalBtn.textContent = 'Devolución total';
-            totalBtn.addEventListener('click', () => showDevolucionDetalle(tx));
+            totalBtn.addEventListener('click', () => {
+                currentReturnMode = 'total';
+                showDevolucionDetalle(tx);
+            });
             
             actionsEl.appendChild(partialBtn);
             actionsEl.appendChild(totalBtn);
@@ -748,6 +857,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (consultarProductoModal?.classList.contains('active')) hideConsultarProductoModal();
         if (cancelPurchaseModal?.classList.contains('active')) hideCancelPurchaseModal();
         if (cancellationConfirmationModal?.classList.contains('active')) hideCancellationConfirmationModal();
+        if (cancelReturnModal?.classList.contains('active')) hideCancelReturnModal();
     });
     cancelLogoutBtn?.addEventListener('click', hideModal);
     
@@ -784,7 +894,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     continuePurchaseBtn?.addEventListener('click', hideCancelPurchaseModal);
     
-    ingresarSkuBtn?.addEventListener('click', showSkuModal);
+    ingresarSkuBtn?.addEventListener('click', () => {
+        cameraMode = 'purchase';
+        showSkuModal();
+    });
     addSkuProductBtn?.addEventListener('click', addSkuProduct);
     addSkuToCartBtn?.addEventListener('click', addSkuProductsToCart);
 
@@ -812,8 +925,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 showProductDetails(randomProduct);
                 break;
             case 'return':
-                console.log("Product scanned for return:", randomProduct.name);
-                showScreen('devolucion-parcial-scan-screen');
+                addProductToPartialReturn(randomProduct);
                 break;
         }
     });
@@ -863,7 +975,9 @@ document.addEventListener('DOMContentLoaded', () => {
     goToDevolucionesBtn?.addEventListener('click', () => showScreen('devoluciones-screen'));
     devolucionesBackBtn?.addEventListener('click', () => showScreen('operaciones-screen'));
     buscarDevolucionBtn?.addEventListener('click', renderDevolucionesResults);
-    cancelarDevolucionBtn?.addEventListener('click', () => showScreen('devoluciones-screen'));
+    cancelarDevolucionBtn?.addEventListener('click', () => {
+        showCancelReturnModal(() => showScreen('devoluciones-screen'));
+    });
     confirmarDevolucionBtn?.addEventListener('click', showDevolucionPagoScreen);
     
     // Devolucion Pago screen listeners
@@ -875,18 +989,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Devolucion Rechazada screen listeners
     retryReturnBtn?.addEventListener('click', showDevolucionPagoScreen);
-    cancelReturnRejectedBtn?.addEventListener('click', finalizeReturn);
+    cancelReturnRejectedBtn?.addEventListener('click', () => showCancelReturnModal(finalizeReturn));
     
     // Devolucion Parcial Scan screen listeners
-    devolucionParcialCancelarBtn?.addEventListener('click', () => showScreen('devoluciones-screen'));
+    const cancelPartialReturn = () => {
+        partialReturnCart = [];
+        showScreen('devoluciones-screen');
+    };
+    devolucionParcialCancelarBtn?.addEventListener('click', () => showCancelReturnModal(cancelPartialReturn));
+    devolucionParcialCancelarSplitBtn?.addEventListener('click', () => showCancelReturnModal(cancelPartialReturn));
+
     devolucionEscanearBtn?.addEventListener('click', () => {
         cameraMode = 'return';
         openCamera();
     });
     devolucionSkuBtn?.addEventListener('click', () => {
-        // For now, this will open the standard SKU modal. 
-        // A future update could create a separate return-specific modal.
+        cameraMode = 'return';
         showSkuModal();
+    });
+    devolucionParcialContinuarBtn?.addEventListener('click', showDevolucionPagoScreen);
+
+    // Cancel Return Modal listeners
+    goBackFromReturnBtn?.addEventListener('click', hideCancelReturnModal);
+    confirmCancelReturnBtn?.addEventListener('click', () => {
+        if (onConfirmCancelReturn) {
+            onConfirmCancelReturn();
+        }
+        hideCancelReturnModal();
     });
 
 
