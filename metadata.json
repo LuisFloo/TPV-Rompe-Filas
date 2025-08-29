@@ -1,0 +1,7 @@
+{
+  "name": "Suburbia TPV",
+  "description": "A Point of Sale application interface for Suburbia.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

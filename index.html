@@ -1,0 +1,692 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suburbia - TPV</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+    <div id="login-screen">
+        <div class="login-content">
+            <svg class="login-logo" viewBox="0 0 246 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M37.9899 10.1989C38.3333 12.8349 37.5258 15.5407 35.6167 17.6974C33.7076 19.854 30.8449 21.2828 27.7513 21.7483C26.5401 21.933 25.3032 22.0124 24.0664 21.9832C21.432 21.9855 18.9172 21.2057 16.9246 19.8184C15.3444 18.7247 14.2887 17.218 13.8837 15.5393C13.3857 13.6559 13.4619 11.6601 14.129 9.80584C14.8013 7.94645 16.0396 6.34999 17.6865 5.20141C19.3335 4.05284 21.3129 3.42163 23.3326 3.39387C25.4219 3.3961 27.4646 4.07254 29.1762 5.31888L31.691 2.53631C29.4795 0.999818 26.7844 -0.00164228 24.0664 2.11364e-05H23.3265C20.5701 0.00435156 17.9255 1.01205 15.867 2.7681C13.8085 4.52415 12.4831 6.89809 11.968 9.4777C11.4529 12.0573 11.7766 14.7176 12.8834 17.0701C13.9902 19.4226 15.8236 21.3533 18.1511 22.5855C20.4786 23.8177 23.166 24.2982 25.8344 23.9715C29.071 23.593 32.0734 22.0003 34.2541 19.5399C36.4348 17.0795 37.6656 13.9169 37.9899 10.6139V10.1989Z" fill="#D80073"/>
+                <path d="M24.0664 38.3813C25.8427 38.3813 27.2923 36.9317 27.2923 35.1554C27.2923 33.3791 25.8427 31.9295 24.0664 31.9295C22.29 31.9295 20.8404 33.3791 20.8404 35.1554C20.8404 36.9317 22.29 38.3813 24.0664 38.3813Z" fill="#D80073"/>
+                <path d="M15.4057 26.5866C13.4116 26.5889 11.751 27.6896 10.8465 29.3564C9.94207 31.0232 9.47852 32.9965 9.47852 34.9972C9.47852 36.9978 9.94207 38.9712 10.8465 40.638C11.751 42.3047 13.4116 43.4054 15.4057 43.4077C17.4 43.4054 19.0606 42.3047 19.965 40.638C20.8695 38.9712 21.333 36.9978 21.333 34.9972C21.333 32.9965 20.8695 31.0232 19.965 29.3564C19.0606 27.6896 17.4 26.5889 15.4057 26.5866ZM30.0838 37.4735C30.0838 35.8068 29.6102 34.407 28.6631 33.2741C27.7159 32.1412 26.4474 31.5747 24.8576 31.5747C23.2678 31.5747 21.9993 32.1412 21.0521 33.2741C20.105 34.407 19.6314 35.8068 19.6314 37.4735C19.6314 39.1402 20.105 40.5399 21.0521 41.6728C21.9993 42.8057 23.2678 43.3722 24.8576 43.3722C26.4474 43.3722 27.7159 42.8057 28.6631 41.6728C29.6102 40.5399 30.0838 39.1402 30.0838 37.4735Z" fill="#D80073"/>
+                <path d="M72.3394 14.5165L78.1009 34.204H68.3275L65.441 24.1611L62.5546 34.204H52.7812L58.5427 14.5165H72.3394ZM82.2038 48.0165C79.9918 48.0165 78.1396 48.7739 76.6472 50.2888C75.1548 51.8037 74.4086 53.6922 74.4086 55.9543C74.4086 58.2164 75.1548 60.1049 76.6472 61.6198C78.1396 63.1347 79.9918 63.8921 82.2038 63.8921C84.4158 63.8921 86.268 63.1347 87.7604 61.6198C89.2528 60.1049 90.0012 58.2164 90.0012 55.9543C90.0012 53.6922 89.2528 51.8037 87.7604 50.2888C86.268 48.7739 84.4158 48.0165 82.2038 48.0165ZM87.8286 14.5165H96.3353V48.1634H87.8286V14.5165ZM101.408 14.5165H109.915V48.1634H101.408V14.5165ZM129.59 43.6665C127.378 43.6665 125.526 44.4239 124.034 45.9388C122.541 47.4537 121.795 49.3422 121.795 51.6043C121.795 53.8664 122.541 55.7549 124.034 57.2698C125.526 58.7847 127.378 59.5421 129.59 59.5421C131.802 59.5421 133.654 58.7847 135.147 57.2698C136.639 55.7549 137.385 53.8664 137.385 51.6043C137.385 49.3422 136.639 47.4537 135.147 45.9388C133.654 44.4239 131.802 43.6665 129.59 43.6665ZM140.781 14.5165H149.288V40.1634H142.928C142.046 40.1634 141.341 40.4502 140.814 41.0238C140.286 41.5975 140.023 42.3448 140.023 43.2659V49.0743H149.337V56.8164H130.639V14.5165H139.146V22.2587H134.197V29.9523H139.146V14.5165Z" fill="#5F256B"/>
+                <path d="M165.012 39.4285C164.411 40.3241 163.858 41.0238 163.354 41.5276C162.849 42.0314 162.251 42.4239 161.558 42.705C159.782 42.0975 158.243 40.9412 156.941 39.236C155.639 37.5309 154.988 35.4382 154.988 33.0276C154.988 29.4795 156.094 26.6579 158.306 24.5627C160.518 22.4676 163.381 21.4199 166.894 21.4199C170.407 21.4199 173.221 22.4764 175.334 24.5804C177.447 26.6843 178.504 29.5243 178.504 33.0999C178.504 36.4239 177.567 39.0699 175.658 41.0375C173.749 42.9962 171.306 44.0238 168.327 44.0238C166.551 44.0238 164.904 43.6225 163.385 42.8193C161.867 42.016 160.782 40.8509 160.131 39.3243L160.131 39.4285ZM153.251 21.4199C151.088 21.4199 149.262 22.1462 147.77 23.6C146.278 25.0537 145.532 26.9238 145.532 29.2037C145.532 31.4837 146.278 33.3537 147.77 34.8074C149.262 36.2612 151.088 36.9874 153.251 36.9874C155.414 36.9874 157.239 36.2612 158.732 34.8074C160.224 33.3537 160.97 31.4837 160.97 29.2037C160.97 26.9238 160.224 25.0537 158.732 23.6C157.239 22.1462 155.414 21.4199 153.251 21.4199ZM169.549 32.8611C169.549 31.1944 169.075 29.7946 168.128 28.6617C167.181 27.5288 165.912 26.9624 164.322 26.9624C162.732 26.9624 161.464 27.5288 160.517 28.6617C159.569 29.7946 159.096 31.1944 159.096 32.8611C159.096 34.5278 159.569 35.9276 160.517 37.0605C161.464 38.1934 162.732 38.7598 164.322 38.7598C165.912 38.7598 167.181 38.1934 168.128 37.0605C169.075 35.9276 169.549 34.5278 169.549 32.8611ZM183.078 30.6474H173.305L170.418 20.6046L167.532 30.6474H157.758L163.52 10.96H177.316L183.078 30.6474ZM183.128 45.8437C180.916 45.8437 179.063 46.6012 177.571 48.116C176.079 49.6309 175.333 51.5194 175.333 53.7815C175.333 56.0436 176.079 57.9321 177.571 59.447C179.063 60.9619 180.916 61.7193 183.128 61.7193C185.34 61.7193 187.192 60.9619 188.685 59.447C190.177 57.9321 190.923 56.0436 190.923 53.7815C190.923 51.5194 190.177 49.6309 188.685 48.116C187.192 46.6012 185.34 45.8437 183.128 45.8437ZM188.755 14.5165H197.262V48.1634H188.755V14.5165ZM202.335 14.5165H210.842V48.1634H202.335V14.5165ZM230.517 43.6665C228.305 43.6665 226.452 44.4239 224.96 45.9388C223.468 47.4537 222.722 49.3422 222.722 51.6043C222.722 53.8664 223.468 55.7549 224.96 57.2698C226.452 58.7847 228.305 59.5421 230.517 59.5421C232.729 59.5421 234.581 58.7847 236.074 57.2698C237.566 55.7549 238.312 53.8664 238.312 51.6043C238.312 49.3422 237.566 47.4537 236.074 45.9388C234.581 44.4239 232.729 43.6665 230.517 43.6665ZM241.708 14.5165H250.215V40.1634H243.855C242.973 40.1634 242.268 40.4502 241.741 41.0238C241.213 41.5975 240.95 42.3448 240.95 43.2659V49.0743H250.264V56.8164H231.566V14.5165H240.073V22.2587H235.124V29.9523H240.073V14.5165Z" fill="#5F256B"/>
+            </svg>
+            <h1 class="login-title">Inicia sesión</h1>
+            <form id="login-form">
+                <div class="input-group">
+                    <input type="email" id="email" name="email" required placeholder="Correo">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" required placeholder="Contraseña">
+                    <span class="material-symbols-outlined password-toggle" id="password-toggle">visibility</span>
+                </div>
+                <button type="submit" class="btn btn-primary">¡Comenzar!</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app" class="hidden">
+        <main>
+            <!-- Pantalla de Compra -->
+            <div id="compra-screen" class="screen active">
+                <header id="compra-header">
+                    <h1 class="title">Comienza una nueva compra</h1>
+                </header>
+                <div id="product-list-container">
+                    <!-- Los productos se inyectarán aquí -->
+                </div>
+                <div id="cart-summary-totals" class="hidden">
+                    <div class="total-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal-amount"></span>
+                    </div>
+                    <div class="total-row">
+                        <span>Descuentos:</span>
+                        <span id="discounts-amount"></span>
+                    </div>
+                     <hr class="divider">
+                    <div class="total-row total-final">
+                        <span>Total:</span>
+                        <span id="total-amount"></span>
+                    </div>
+                </div>
+                <div id="compra-footer">
+                     <div class="main-actions">
+                        <button class="btn btn-primary" id="scan-product-btn">Escanear producto</button>
+                        <button class="btn btn-secondary" id="ingresar-sku-btn">Ingresar SKU</button>
+                        <button class="btn btn-tertiary" id="consultar-producto-btn">Consultar producto</button>
+                    </div>
+                    <div class="bottom-actions hidden" id="cart-navigation-actions">
+                        <button class="btn btn-secondary" id="cancel-purchase-intermediate-btn">Cancelar compra</button>
+                        <button class="btn btn-secondary" id="go-to-checkout-btn">Continuar compra</button>
+                    </div>
+                     <div class="bottom-actions hidden" id="checkout-actions">
+                        <button class="btn btn-primary" id="realizar-pago-btn">Realizar pago</button>
+                        <button class="btn btn-secondary" id="cancel-purchase-btn">Cancelar compra</button>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Pantalla de Detalles del Producto -->
+            <div id="product-details-screen" class="screen">
+                <div class="product-details-content">
+                    <h1 id="product-details-title" class="title"></h1>
+                    <div class="product-info">
+                        <div class="info-row">
+                            <span>SKU:</span>
+                            <span id="product-details-sku"></span>
+                        </div>
+                        <div class="info-row">
+                            <span>Precio:</span>
+                            <span id="product-details-price"></span>
+                        </div>
+                    </div>
+                    <hr class="divider">
+                </div>
+                <div class="screen-footer">
+                    <button class="btn btn-primary" id="add-to-cart-details-btn">Agregar al carrito</button>
+                    <button class="btn btn-secondary" id="regresar-btn">Regresar</button>
+                </div>
+            </div>
+            
+            <!-- Pantalla de Promociones -->
+            <div id="promotions-screen" class="screen">
+                <div class="promotions-content">
+                    <h1 id="promo-product-title" class="title">Suéter gris</h1>
+                    <div class="product-info">
+                        <div class="info-row">
+                            <span>SKU:</span>
+                            <span id="promo-product-sku">Suéter gris</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Precio:</span>
+                            <span id="promo-product-price">$1,234.43 MXN</span>
+                        </div>
+                    </div>
+                    <hr class="divider">
+                    <div class="discounts-section">
+                        <h2>Descuentos</h2>
+                        <div class="discount-options">
+                            <label class="discount-option">
+                                <div class="discount-info">
+                                    <p>Porcentaje de descuento</p>
+                                    <span class="discount-tag">25% de descuento</span>
+                                </div>
+                                <input type="radio" name="discount" value="25" checked>
+                                <span class="custom-radio"></span>
+                            </label>
+                            <label class="discount-option">
+                                <div class="discount-info">
+                                    <p>Porcentaje de descuento</p>
+                                    <span class="discount-tag">10% de descuento</span>
+                                </div>
+                                <input type="radio" name="discount" value="10">
+                                <span class="custom-radio"></span>
+                            </label>
+                            <label class="discount-option">
+                                <div class="discount-info">
+                                    <p>Monto de descuento</p>
+                                    <span class="discount-tag">$10.00 de descuento</span>
+                                </div>
+                                <input type="radio" name="discount" value="amount-10">
+                                <span class="custom-radio"></span>
+                            </label>
+                             <label class="discount-option">
+                                <div class="discount-info">
+                                    <p>Monto de descuento</p>
+                                    <span class="discount-tag">$15.00 de descuento</span>
+                                </div>
+                                <input type="radio" name="discount" value="amount-15">
+                                <span class="custom-radio"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-footer">
+                    <button class="btn btn-primary" id="cambiar-promocion-btn">Cambiar promoción</button>
+                    <button class="btn btn-secondary" id="regresar-promo-btn">Regresar</button>
+                </div>
+            </div>
+
+            <!-- Pantalla de Pago -->
+            <div id="payment-screen" class="screen">
+                <div class="payment-content">
+                    <p class="payment-title">Total a cobrar</p>
+                    <h1 id="payment-total-amount" class="payment-total">$0.00 MXN</h1>
+                    <div class="payment-instructions">
+                        <p>INSERTE/APROXIME/DESLICE</p>
+                        <div class="payment-icons">
+                            <span class="material-symbols-outlined">nfc</span>
+                            <span class="material-symbols-outlined">contactless</span>
+                            <span class="material-symbols-outlined">swipe</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-footer">
+                    <button class="btn btn-secondary" id="mark-approved-btn">Marcar como aprobada</button>
+                    <button class="btn btn-secondary" id="mark-rejected-btn">Marcar como rechazada</button>
+                </div>
+            </div>
+
+            <!-- Pantalla de Transacción Completa -->
+            <div id="transaction-complete-screen" class="screen">
+                <div class="transaction-complete-content">
+                    <div class="success-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="40" fill="#2ECC71"/>
+                            <path d="M26 41.3333L36.6667 52L54 28" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h1 class="transaction-complete-title">¡Transacción completa!</h1>
+                    <div class="transaction-data">
+                        <div class="data-row">
+                            <span>STAN:</span>
+                            <span>45</span>
+                        </div>
+                        <div class="data-row">
+                            <span>Referencia:</span>
+                            <span>000006755890</span>
+                        </div>
+                        <div class="data-row">
+                            <span>Autorización:</span>
+                            <span>005732</span>
+                        </div>
+                        <div class="data-row">
+                            <span>ARQC:</span>
+                            <span>298EC7BE6799A82C</span>
+                        </div>
+                        <div class="data-row">
+                            <span>AID:</span>
+                            <span>a0000000031010</span>
+                        </div>
+                    </div>
+                    <div class="total-section">
+                        <p>Monto Total:</p>
+                        <p id="transaction-total-amount" class="total-amount-value">$5,153.00</p>
+                    </div>
+                </div>
+                <div class="screen-footer">
+                    <div class="split-buttons">
+                        <button class="btn btn-secondary btn-with-icon" id="print-receipt-btn">
+                            <span class="material-symbols-outlined">print</span>
+                            Imprimir
+                        </button>
+                        <button class="btn btn-secondary btn-with-icon" id="share-receipt-btn">
+                            <span class="material-symbols-outlined">share</span>
+                            Compartir
+                        </button>
+                    </div>
+                    <button class="btn btn-primary" id="finalize-sale-btn">Finalizar venta</button>
+                </div>
+            </div>
+
+            <!-- Pantalla de Transacción Rechazada -->
+            <div id="transaction-rejected-screen" class="screen">
+                <div class="transaction-complete-content">
+                    <div class="error-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="40" fill="#EF5350"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M36 54C36 51.7909 37.7909 50 40 50C42.2091 50 44 51.7909 44 54C44 56.2091 42.2091 58 40 58C37.7909 58 36 56.2091 36 54ZM36 25C36 22.7909 37.7909 21 40 21C42.2091 21 44 22.7909 44 25V41C44 43.2091 42.2091 45 40 45C37.7909 45 36 43.2091 36 41V25Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <h1 class="transaction-complete-title">¡Transacción rechazada!</h1>
+                    <div class="transaction-data rejected-details">
+                        <div class="data-row">
+                            <span>Código de respuesta:</span>
+                            <span>01</span>
+                        </div>
+                        <div class="rejected-description-block">
+                            <p>Descripción:</p>
+                            <p>Error en la lectura de la tarjeta.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-footer">
+                    <div class="split-buttons">
+                        <button class="btn btn-secondary btn-with-icon">
+                            <span class="material-symbols-outlined">print</span>
+                            Imprimir
+                        </button>
+                        <button class="btn btn-secondary btn-with-icon">
+                            <span class="material-symbols-outlined">share</span>
+                            Compartir
+                        </button>
+                    </div>
+                    <button class="btn btn-primary" id="retry-payment-btn">Volver a intentar</button>
+                    <button class="btn btn-secondary" id="cancel-sale-rejected-btn">Cancelar venta</button>
+                </div>
+            </div>
+
+            <!-- Pantalla de Cancelación Completa -->
+            <div id="cancellation-complete-screen" class="screen">
+                <div class="transaction-complete-content">
+                    <div class="success-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="40" fill="#2ECC71"/>
+                            <path d="M26 41.3333L36.6667 52L54 28" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h1 class="transaction-complete-title">¡Cancelación completa!</h1>
+                    <div class="transaction-data">
+                        <div class="data-row">
+                            <span>STAN:</span>
+                            <span>45</span>
+                        </div>
+                        <div class="data-row">
+                            <span>Referencia:</span>
+                            <span>000006755890</span>
+                        </div>
+                        <div class="data-row">
+                            <span>Autorización:</span>
+                            <span>005732</span>
+                        </div>
+                        <div class="data-row">
+                            <span>ARQC:</span>
+                            <span>298EC7BE6799A82C</span>
+                        </div>
+                        <div class="data-row">
+                            <span>AID:</span>
+                            <span>a0000000031010</span>
+                        </div>
+                    </div>
+                    <div class="total-section">
+                        <p>Monto Total:</p>
+                        <p class="total-amount-value">$323.23</p>
+                    </div>
+                </div>
+                <div class="screen-footer">
+                    <div class="split-buttons">
+                        <button class="btn btn-lavender btn-with-icon">
+                            <span class="material-symbols-outlined">print</span>
+                            Imprimir
+                        </button>
+                        <button class="btn btn-lavender btn-with-icon">
+                            <span class="material-symbols-outlined">share</span>
+                            Compartir
+                        </button>
+                    </div>
+                    <button class="btn btn-primary" id="finalize-cancellation-btn">Finalizar</button>
+                </div>
+            </div>
+
+            <!-- Pantalla de Operaciones -->
+            <div id="operaciones-screen" class="screen">
+                <div class="action-buttons">
+                    <button class="btn btn-large-outline" id="go-to-devoluciones-btn">
+                        <span class="material-symbols-outlined">currency_exchange</span>
+                        Devoluciones
+                    </button>
+                    <button class="btn btn-large-outline" id="cancellations-btn">
+                        <span class="material-symbols-outlined">cancel</span>
+                        Cancelaciones
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pantalla de Devoluciones -->
+            <div id="devoluciones-screen" class="screen">
+                <header class="screen-header">
+                    <button class="back-btn" id="devoluciones-back-btn" aria-label="Regresar">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </button>
+                    <h1 class="screen-title">Devoluciones</h1>
+                </header>
+                <div class="devoluciones-content">
+                    <h2>Busca la compra a la cual realizarás la devolución</h2>
+                    <div class="info-alert">
+                        <p>La devolución solo puede realizarse 30 días después de la compra.</p>
+                    </div>
+                    <form id="devoluciones-form" class="devoluciones-form">
+                        <input type="text" placeholder="No. de Transacción (STAN)">
+                        <input type="text" placeholder="Terminal">
+                        <input type="text" placeholder="Tienda">
+                        <input type="text" placeholder="Vendedor">
+                        <button type="button" class="btn btn-primary" id="buscar-devolucion-btn">Buscar compra</button>
+                    </form>
+                </div>
+                <div id="devoluciones-results-container" class="transaction-list hidden">
+                    <!-- Search results will be injected here -->
+                </div>
+            </div>
+
+            <!-- Pantalla de Detalle de Devolución -->
+            <div id="devolucion-detalle-screen" class="screen">
+                <div class="devolucion-detalle-main-content">
+                    <header class="screen-header">
+                        <h1 class="screen-title">Transacción a devolver</h1>
+                    </header>
+                    <div class="devolucion-detalle-info">
+                        <p id="devolucion-card-number">123456******1234</p>
+                        <p id="devolucion-datetime">12/11/2024 12:21</p>
+                        <p id="devolucion-reference">Referencia: 000004280117</p>
+                        <p id="devolucion-stan">STAN: 22</p>
+                        <p id="devolucion-terminal">Terminal: 22</p>
+                        <p id="devolucion-amount">$5,153.00</p>
+                    </div>
+                </div>
+                <div class="screen-footer devolucion-detalle-footer">
+                    <div class="devolucion-summary">
+                        <span class="devolucion-summary-label">Por devolver:</span>
+                        <span class="devolucion-summary-amount">$5,153.00</span>
+                    </div>
+                    <button class="btn btn-primary" id="confirmar-devolucion-btn">Devolución de tarjeta ***1234</button>
+                    <button class="btn btn-lavender" id="cancelar-devolucion-btn">Cancelar devolución</button>
+                </div>
+            </div>
+            
+            <!-- Pantalla de Pago de Devolución -->
+            <div id="devolucion-pago-screen" class="screen">
+                <div class="payment-content">
+                    <p class="payment-title">Total a cobrar</p>
+                    <h1 id="devolucion-pago-total-amount" class="payment-total">$5,153.00 MXN</h1>
+                    <div class="payment-instructions">
+                        <p>INSERTE/APROXIME/DESLICE</p>
+                        <div class="payment-icons">
+                            <span class="material-symbols-outlined">nfc</span>
+                            <span class="material-symbols-outlined">contactless</span>
+                            <span class="material-symbols-outlined">swipe</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-footer">
+                    <button class="btn btn-lavender" id="devolucion-pago-aprobada-btn">Marcar como aprobada</button>
+                    <button class="btn btn-lavender" id="devolucion-pago-rechazada-btn">Marcar como rechazada</button>
+                </div>
+            </div>
+
+            <!-- Pantalla de Devolución Completa -->
+            <div id="devolucion-completa-screen" class="screen">
+                <div class="transaction-complete-content">
+                    <div class="success-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="40" fill="#2ECC71"/>
+                            <path d="M26 41.3333L36.6667 52L54 28" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h1 class="transaction-complete-title">¡Devolución completa!</h1>
+                    <div class="transaction-data">
+                        <div class="data-row">
+                            <span>STAN:</span>
+                            <span>45</span>
+                        </div>
+                        <div class="data-row">
+                            <span>Referencia:</span>
+                            <span>000006755890</span>
+                        </div>
+                        <div class="data-row">
+                            <span>Autorización:</span>
+                            <span>005732</span>
+                        </div>
+                        <div class="data-row">
+                            <span>ARQC:</span>
+                            <span>298EC7BE6799A82C</span>
+                        </div>
+                        <div class="data-row">
+                            <span>AID:</span>
+                            <span>a0000000031010</span>
+                        </div>
+                    </div>
+                    <div class="total-section">
+                        <p>Monto Total:</p>
+                        <p id="devolucion-completa-total-amount" class="total-amount-value">$1,250.00</p>
+                    </div>
+                </div>
+                <div class="screen-footer">
+                    <div class="split-buttons">
+                        <button class="btn btn-lavender btn-with-icon">
+                            <span class="material-symbols-outlined">print</span>
+                            Imprimir
+                        </button>
+                        <button class="btn btn-lavender btn-with-icon">
+                            <span class="material-symbols-outlined">share</span>
+                            Compartir
+                        </button>
+                    </div>
+                    <button class="btn btn-primary" id="finalize-return-btn">Finalizar</button>
+                </div>
+            </div>
+
+            <!-- Pantalla de Devolución Rechazada -->
+            <div id="devolucion-rechazada-screen" class="screen">
+                <div class="transaction-complete-content">
+                    <div class="error-icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="40" fill="#EF5350"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M36 54C36 51.7909 37.7909 50 40 50C42.2091 50 44 51.7909 44 54C44 56.2091 42.2091 58 40 58C37.7909 58 36 56.2091 36 54ZM36 25C36 22.7909 37.7909 21 40 21C42.2091 21 44 22.7909 44 25V41C44 43.2091 42.2091 45 40 45C37.7909 45 36 43.2091 36 41V25Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <h1 class="transaction-complete-title">¡Transacción rechazada!</h1>
+                    <div class="transaction-data rejected-details">
+                        <div class="data-row">
+                            <span>Código de respuesta:</span>
+                            <span>01</span>
+                        </div>
+                        <div class="rejected-description-block">
+                            <p>Descripción:</p>
+                            <p>Error en la lectura de la tarjeta.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-footer">
+                    <div class="split-buttons">
+                        <button class="btn btn-lavender btn-with-icon">
+                            <span class="material-symbols-outlined">print</span>
+                            Imprimir
+                        </button>
+                        <button class="btn btn-lavender btn-with-icon">
+                            <span class="material-symbols-outlined">share</span>
+                            Compartir
+                        </button>
+                    </div>
+                    <button class="btn btn-primary" id="retry-return-btn">Volver a intentar</button>
+                    <button class="btn btn-lavender" id="cancel-return-rejected-btn">Cancelar devolución</button>
+                </div>
+            </div>
+            
+            <!-- Pantalla de Devolución Parcial - Escanear Productos -->
+            <div id="devolucion-parcial-scan-screen" class="screen">
+                <header>
+                    <h1 class="title">Escanea los productos a devolver</h1>
+                </header>
+                <div class="devolucion-parcial-content">
+                    <!-- Scanned products will appear here -->
+                </div>
+                <div class="screen-footer">
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="devolucion-escanear-btn">Escanear producto</button>
+                        <button class="btn btn-secondary" id="devolucion-sku-btn">Ingresar SKU</button>
+                        <button class="btn btn-secondary" id="devolucion-parcial-cancelar-btn">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pantalla de Cancelaciones -->
+            <div id="cancelaciones-screen" class="screen">
+                <header class="screen-header">
+                    <button class="back-btn" id="cancelaciones-back-btn" aria-label="Regresar">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </button>
+                    <h1 class="screen-title">Cancelaciones</h1>
+                </header>
+                <div class="cancellations-content">
+                    <h2>Realiza la búsqueda de la compra que deseas cancelar</h2>
+                    <div class="info-alert">
+                        <p>La cancelación solo se permite en la misma terminal y el mismo día de la compra.</p>
+                    </div>
+                    <div class="search-group">
+                        <input type="text" placeholder="No. de transacción (STAN)" aria-label="Número de transacción STAN">
+                        <button class="search-btn" id="search-transaction-btn" aria-label="Buscar transacción">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                    </div>
+                    <div id="search-result-container" class="search-result hidden">
+                        <div class="search-result-details">
+                            <p>No. de Transacción: 32</p>
+                            <p>Terminal: 21</p>
+                            <p>Empleado: 22</p>
+                        </div>
+                        <div class="search-result-actions">
+                            <p>12/11/2024 12:21</p>
+                            <p class="amount">$323.23</p>
+                            <button class="btn btn-secondary btn-cancel" id="cancel-found-transaction-btn">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Pantalla de Administración -->
+            <div id="administracion-screen" class="screen">
+                <header>
+                    <h1 class="title">Reporte de ventas</h1>
+                    <p class="subtitle">Visualiza los detalles de una compra al seleccionarla o imprime un reporte de todas las compras.</p>
+                </header>
+                <div class="transaction-list">
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <p>No. de Tansacción: 32</p>
+                            <p>Terminal: 21</p>
+                            <p>Empleado: 22</p>
+                        </div>
+                        <div class="transaction-info">
+                            <p>12/11/2024 12:21</p>
+                            <p class="amount">$5,153.00</p>
+                        </div>
+                    </div>
+                    <hr class="divider">
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <p>No. de Tansacción: 32</p>
+                            <p>Terminal: 21</p>
+                            <p>Empleado: 22</p>
+                        </div>
+                        <div class="transaction-info">
+                            <p>12/11/2024 12:21</p>
+                            <p class="amount">$5,153.00</p>
+                        </div>
+                    </div>
+                    <hr class="divider">
+                    <div class="transaction-item">
+                        <div class="transaction-details">
+                            <p>No. de Tansacción: 32</p>
+                            <p>Terminal: 21</p>
+                            <p>Empleado: 22</p>
+                        </div>
+                        <div class="transaction-info">
+                            <p>12/11/2024 12:21</p>
+                            <p class="amount">$5,153.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-footer">
+                    <button class="btn btn-primary">Imprimir reporte</button>
+                </div>
+            </div>
+        </main>
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-target="compra-screen" aria-current="page">
+                <div class="nav-icon-container">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                </div>
+                <span class="nav-label">Compra</span>
+            </button>
+            <button class="nav-item" data-target="operaciones-screen">
+                 <div class="nav-icon-container">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                </div>
+                <span class="nav-label">Operaciones</span>
+            </button>
+            <button class="nav-item" data-target="administracion-screen">
+                <div class="nav-icon-container">
+                    <span class="material-symbols-outlined">bar_chart</span>
+                </div>
+                <span class="nav-label">Administración</span>
+            </button>
+            <button class="nav-item" id="logout-nav-item">
+                <div class="nav-icon-container">
+                    <span class="material-symbols-outlined">logout</span>
+                </div>
+                <span class="nav-label">Cerrar sesión</span>
+            </button>
+        </nav>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay"></div>
+
+    <div id="logout-modal" class="modal">
+        <div class="modal-handle"></div>
+        <h2 class="modal-title">¿Seguro que quieres cerrar la sesión?</h2>
+        <div class="modal-actions">
+            <button class="btn btn-primary" id="confirm-logout-btn">Cerrar sesión</button>
+            <button class="btn btn-secondary" id="cancel-logout-btn">Regresar</button>
+        </div>
+    </div>
+    
+    <div id="sku-modal" class="modal">
+        <div class="modal-handle"></div>
+        <p class="modal-instructions">
+            Ingresa el SKU de cada producto, presiona en “Agregar producto”, cuando hayas acabado presiona “Finalizar”.
+        </p>
+        <div class="input-group">
+            <input type="text" id="sku-input" placeholder="SKU">
+        </div>
+        <div id="sku-added-container" class="hidden">
+            <h3 class="sku-added-title">Productos agregados:</h3>
+            <div id="sku-pills-container">
+                <!-- Pills will be injected here -->
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-primary" id="add-sku-product-btn">Agregar producto</button>
+            <button class="btn btn-secondary hidden" id="add-sku-to-cart-btn">Agregar productos al carrito</button>
+        </div>
+    </div>
+
+    <div id="consultar-producto-modal" class="modal">
+        <div class="modal-handle"></div>
+        <div class="consultar-modal-content">
+            <h2 class="modal-title">¿Cómo quieres consultar el artículo?</h2>
+            <button class="btn btn-primary" id="consultar-escanear-btn">Escanear producto</button>
+            <hr class="modal-divider">
+            <div class="input-group">
+                <input type="text" id="consultar-sku-input" placeholder="SKU">
+            </div>
+            <button class="btn btn-primary" id="consultar-sku-btn">Consultar con SKU</button>
+            <button class="btn btn-secondary" id="consultar-cancelar-btn">Cancelar</button>
+        </div>
+    </div>
+    
+    <div id="cancel-purchase-modal" class="modal">
+        <div class="modal-handle"></div>
+        <h2 class="modal-title">¿Estás seguro de cancelar la compra?</h2>
+        <div class="modal-actions">
+            <button class="btn btn-primary" id="confirm-cancel-btn">Cancelar compra</button>
+            <button class="btn btn-secondary" id="continue-purchase-btn">Continuar compra</button>
+        </div>
+    </div>
+
+    <div id="cancellation-confirmation-modal" class="modal">
+        <div class="modal-handle"></div>
+        <p class="modal-confirmation-text">¿Estás seguro de que deseas realizar la cancelación? Este paso es irreversible.</p>
+        <div class="modal-actions">
+            <button class="btn btn-primary" id="confirm-cancellation-btn">Cancelar compra</button>
+            <button class="btn btn-secondary" id="go-back-from-cancellation-btn">Regresar</button>
+        </div>
+    </div>
+
+    <div id="camera-view" class="camera-overlay hidden">
+        <video id="camera-feed" autoplay playsinline></video>
+    </div>
+
+    <script type="module" src="index.tsx"></script>
+</body>
+</html>
