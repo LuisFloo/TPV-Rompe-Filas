@@ -135,7 +135,7 @@ main {
     padding: 0;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .screen {
@@ -172,6 +172,10 @@ header {
 }
 
 #compra-screen .action-buttons {
+    margin: auto;
+}
+
+#operaciones-screen .action-buttons {
     margin: auto;
 }
 
@@ -601,6 +605,7 @@ header {
     margin-bottom: 24px;
     font-weight: 500;
     font-size: 14px;
+    overflow-wrap: break-word;
 }
 
 #payment-screen .payment-icons, #devolucion-pago-screen .payment-icons {
@@ -619,6 +624,14 @@ header {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+#payment-screen .payment-footer .btn,
+#devolucion-pago-screen .payment-footer .btn {
+    width: auto;
+    align-self: center;
+    padding-left: 32px;
+    padding-right: 32px;
 }
 
 /* Transaction Complete & Rejected Screen Styles */
