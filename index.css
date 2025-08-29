@@ -1,5 +1,3 @@
-
-
 :root {
     --primary-color: #5F256B;
     --secondary-color: #E8DEF8;
@@ -137,7 +135,7 @@ main {
     padding: 0;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .screen {
@@ -257,6 +255,12 @@ header {
 
 .btn-large-outline:hover {
     background-color: #f0f0f0;
+}
+
+.main-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 /* Compra Screen Active State */
@@ -431,9 +435,8 @@ header {
     grid-template-columns: 1fr 1fr;
 }
 
-
-#checkout-actions button:first-child {
-    margin-bottom: -8px; 
+#checkout-actions {
+    gap: 8px;
 }
 
 
