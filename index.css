@@ -572,8 +572,6 @@ header {
 #payment-screen, #devolucion-pago-screen {
     justify-content: space-between;
     background-color: var(--payment-bg-color);
-    margin: 0 -24px; /* Extend bg to screen edges */
-    padding: 0 24px;
 }
 
 #payment-screen .payment-content, #devolucion-pago-screen .payment-content {
@@ -628,7 +626,6 @@ header {
 
 #payment-screen .payment-footer .btn,
 #devolucion-pago-screen .payment-footer .btn {
-    width: auto;
     align-self: center;
     padding-left: 32px;
     padding-right: 32px;
