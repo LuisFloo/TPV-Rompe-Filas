@@ -44,10 +44,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
+    height: 100%;
     padding: 24px;
     background-color: var(--background-color);
-    padding-top: 8vh;
 }
 
 .login-content {
@@ -964,7 +964,7 @@ header {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color: 0.3s ease;
 }
 .search-btn:hover {
     background-color: #4A1D54;
@@ -1120,20 +1120,23 @@ header {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
+    right: 0;
     background-color: var(--background-color);
-    padding: 16px 24px 32px;
+    z-index: 2001;
     border-top-left-radius: 28px;
     border-top-right-radius: 28px;
-    z-index: 2001;
+    padding: 16px 24px 24px 24px;
     transform: translateY(100%);
     transition: transform 0.3s ease-in-out;
-    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .modal.active {
     transform: translateY(0);
-    visibility: visible;
 }
 
 .modal-handle {
@@ -1141,147 +1144,184 @@ header {
     height: 4px;
     background-color: var(--handle-color);
     border-radius: 2px;
-    margin: 0 auto 24px auto;
+    margin-bottom: 16px;
+    flex-shrink: 0;
 }
 
 .modal-title {
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 32px;
-    color: var(--text-color);
+    font-size: 22px;
+    font-weight: 500;
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
+    width: 100%;
 }
 
-.modal-confirmation-text {
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 28px;
-    color: var(--text-color);
-    text-align: left;
-    margin-bottom: 32px;
+.modal-instructions {
+    font-size: 14px;
+    color: var(--nav-icon-color);
+    text-align: center;
+    margin-bottom: 24px;
+    width: 100%;
 }
 
 .modal-actions {
     display: flex;
     flex-direction: column;
     gap: 16px;
-}
-
-/* SKU Modal Specific Styles */
-.modal-instructions {
-    font-size: 16px;
-    line-height: 24px;
-    margin-bottom: 24px;
-    color: var(--text-color);
-}
-
-#sku-modal .input-group {
-    margin-bottom: 24px;
-}
-
-#sku-modal .input-group input {
     width: 100%;
-    border: none;
+    margin-top: auto;
+}
+
+.modal-confirmation-text {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+    margin: 16px 0;
+}
+
+
+/* SKU Modal specifics */
+#sku-modal .input-group {
+    width: 100%;
+    margin-bottom: 16px;
+}
+#sku-modal .input-group input {
+     width: 100%;
+    border: 1px solid var(--outline-color);
+    border-radius: 8px;
     padding: 16px;
     font-size: 16px;
-    background-color: var(--input-bg-color);
-    color: var(--text-color);
-    border-radius: 4px;
-    outline: none;
+    background-color: var(--background-color);
 }
-
-#sku-modal .input-group input::placeholder {
-    color: var(--nav-icon-color);
+#sku-modal .input-group input:focus {
+    outline: 2px solid var(--primary-color);
+    border-color: var(--primary-color);
 }
-
+#sku-added-container {
+    width: 100%;
+    margin-bottom: 16px;
+}
 .sku-added-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
-
 #sku-pills-container {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 24px;
 }
-
 .sku-pill {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    gap: 8px;
     background-color: var(--secondary-color);
     color: var(--on-secondary-color);
-    border-radius: 8px;
     padding: 6px 12px;
+    border-radius: 8px;
     font-size: 14px;
-    font-weight: 500;
 }
-
-.sku-pill button {
+.remove-pill-btn {
     background: none;
     border: none;
     cursor: pointer;
-    margin-left: 8px;
-    padding: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    padding: 0;
     color: var(--on-secondary-color);
 }
-
-.sku-pill .material-symbols-outlined {
+.remove-pill-btn .material-symbols-outlined {
     font-size: 18px;
 }
 
-/* Consultar Producto Modal Specific Styles */
+/* Consultar Producto Modal specifics */
 .consultar-modal-content {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 16px;
 }
-
-.consultar-modal-content .modal-title {
-    text-align: left;
-    font-size: 22px;
-    margin-bottom: 8px;
-}
-
-.consultar-modal-content .modal-divider {
+.modal-divider {
     border: none;
     border-top: 1px solid var(--divider-color);
-    margin: 0;
-}
-
-.consultar-modal-content .input-group input {
+    margin: 8px 0;
     width: 100%;
-    border: none;
-    padding: 16px;
-    font-size: 16px;
-    background-color: var(--input-bg-color);
-    color: var(--text-color);
-    border-radius: 4px;
-    outline: none;
 }
 
-.consultar-modal-content .input-group input::placeholder {
-    color: var(--nav-icon-color);
-}
 
-/* Camera View Styles */
+/* Camera Overlay */
 .camera-overlay {
     position: fixed;
     inset: 0;
     background-color: #000;
     z-index: 3000;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-.camera-overlay video {
+#camera-feed {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* Desktop POS Terminal Emulator Styles */
+@media (min-width: 600px) {
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #e0e0e0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 32px;
+    }
+
+    .phone-emulator {
+        width: 420px;
+        height: 780px;
+        border-style: solid;
+        border-color: #f0f2f5; /* Light gray plastic body */
+        border-width: 80px 14px 40px 14px; /* Top (printer), sides, bottom (grip) */
+        border-radius: 24px;
+        box-shadow: 
+            inset 0 0 0 2px #d9dbde, /* Darker inner bezel around screen */
+            0 20px 40px -10px rgba(0,0,0,0.2), 
+            0 10px 20px -5px rgba(0,0,0,0.1);
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--background-color);
+        flex-shrink: 0;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .phone-emulator::before {
+        content: '';
+        position: absolute;
+        top: -48px; 
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 5px;
+        background-color: #B0B3B8;
+        border-radius: 3px;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    #app {
+        /* Create positioning context for modals and overlays */
+        position: relative; 
+    }
+
+    /* Change fixed elements to be absolute to the app container */
+    .modal-overlay,
+    .modal,
+    .camera-overlay {
+        position: absolute;
+    }
 }
