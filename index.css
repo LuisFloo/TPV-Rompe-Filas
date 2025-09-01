@@ -36,6 +36,14 @@ body {
     overflow: hidden;
 }
 
+.emulator-wrapper, .phone-emulator {
+    height: 100%;
+}
+
+.contactless-symbol {
+    display: none;
+}
+
 .hidden {
     display: none !important;
 }
@@ -1301,6 +1309,7 @@ header {
     
     .emulator-wrapper {
         position: relative;
+        height: auto;
     }
 
     .phone-emulator {
@@ -1324,6 +1333,7 @@ header {
     }
 
     .contactless-symbol {
+        display: block;
         position: absolute;
         top: 25px;
         left: 50%;
