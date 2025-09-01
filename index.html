@@ -365,21 +365,23 @@
                             </button>
                             <h1 class="screen-title">Devoluciones</h1>
                         </header>
-                        <div class="devoluciones-content">
-                            <h2>Busca la compra a la cual realizarás la devolución</h2>
-                            <div class="info-alert">
-                                <p>La devolución solo puede realizarse 30 días después de la compra.</p>
+                        <div class="devoluciones-main-content">
+                            <div class="devoluciones-content">
+                                <h2>Busca la compra a la cual realizarás la devolución</h2>
+                                <div class="info-alert">
+                                    <p>La devolución solo puede realizarse 30 días después de la compra.</p>
+                                </div>
+                                <form id="devoluciones-form" class="devoluciones-form">
+                                    <input type="text" placeholder="No. de Transacción (STAN)">
+                                    <input type="text" placeholder="Terminal">
+                                    <input type="text" placeholder="Tienda">
+                                    <input type="text" placeholder="Vendedor">
+                                    <button type="button" class="btn btn-primary" id="buscar-devolucion-btn">Buscar compra</button>
+                                </form>
                             </div>
-                            <form id="devoluciones-form" class="devoluciones-form">
-                                <input type="text" placeholder="No. de Transacción (STAN)">
-                                <input type="text" placeholder="Terminal">
-                                <input type="text" placeholder="Tienda">
-                                <input type="text" placeholder="Vendedor">
-                                <button type="button" class="btn btn-primary" id="buscar-devolucion-btn">Buscar compra</button>
-                            </form>
-                        </div>
-                        <div id="devoluciones-results-container" class="transaction-list hidden">
-                            <!-- Search results will be injected here -->
+                            <div id="devoluciones-results-container" class="transaction-list hidden">
+                                <!-- Search results will be injected here -->
+                            </div>
                         </div>
                     </div>
 

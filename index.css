@@ -1,4 +1,5 @@
 
+
 :root {
     --primary-color: #5F256B;
     --secondary-color: #E8DEF8;
@@ -722,6 +723,11 @@ header {
 }
 
 /* Devoluciones Screen Styles */
+.devoluciones-main-content {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
 .devoluciones-content {
     display: flex;
     flex-direction: column;
@@ -761,6 +767,11 @@ header {
 
 #devoluciones-results-container {
     margin-top: 24px;
+}
+
+#devoluciones-screen .transaction-list {
+    flex-grow: 0;
+    overflow-y: visible;
 }
 
 .devolucion-item {
