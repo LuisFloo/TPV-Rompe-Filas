@@ -113,10 +113,17 @@
                         <div class="discount-options">
                             <label class="discount-option">
                                 <div class="discount-info">
+                                    <p>Sin promoción</p>
+                                </div>
+                                <input type="radio" name="discount" value="none" checked>
+                                <span class="custom-radio"></span>
+                            </label>
+                            <label class="discount-option">
+                                <div class="discount-info">
                                     <p>Porcentaje de descuento</p>
                                     <span class="discount-tag">25% de descuento</span>
                                 </div>
-                                <input type="radio" name="discount" value="25" checked>
+                                <input type="radio" name="discount" value="25">
                                 <span class="custom-radio"></span>
                             </label>
                             <label class="discount-option">
@@ -326,6 +333,24 @@
                     </button>
                 </div>
             </div>
+            
+            <!-- Pantalla de Reportes -->
+            <div id="reportes-screen" class="screen">
+                <header>
+                    <h1 class="title">Reportes</h1>
+                    <p class="subtitle">Transacciones del día</p>
+                </header>
+                <div id="report-list-container" class="transaction-list">
+                    <!-- Report items will be injected here -->
+                </div>
+                <div class="report-footer">
+                    <hr class="divider">
+                    <div class="total-row total-final">
+                        <span>Total:</span>
+                        <span id="report-total-amount">$0.00</span>
+                    </div>
+                </div>
+            </div>
 
             <!-- Pantalla de Devoluciones -->
             <div id="devoluciones-screen" class="screen">
@@ -459,7 +484,7 @@
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M36 54C36 51.7909 37.7909 50 40 50C42.2091 50 44 51.7909 44 54C44 56.2091 42.2091 58 40 58C37.7909 58 36 56.2091 36 54ZM36 25C36 22.7909 37.7909 21 40 21C42.2091 21 44 22.7909 44 25V41C44 43.2091 42.2091 45 40 45C37.7909 45 36 43.2091 36 41V25Z" fill="white"/>
                         </svg>
                     </div>
-                    <h1 class="transaction-complete-title">¡Transacción rechazada!</h1>
+                    <h1 class="transaction-complete-title">¡Devolución rechazada!</h1>
                     <div class="transaction-data rejected-details">
                         <div class="data-row">
                             <span>Código de respuesta:</span>
@@ -472,7 +497,7 @@
                     </div>
                 </div>
                 <div class="screen-footer">
-                    <div class="split-buttons">
+                     <div class="split-buttons">
                         <button class="btn btn-lavender btn-with-icon">
                             <span class="material-symbols-outlined">print</span>
                             Imprimir
@@ -483,215 +508,181 @@
                         </button>
                     </div>
                     <button class="btn btn-primary" id="retry-return-btn">Volver a intentar</button>
-                    <button class="btn btn-lavender" id="cancel-return-rejected-btn">Cancelar devolución</button>
+                    <button class="btn btn-secondary" id="cancel-return-rejected-btn">Cancelar devolución</button>
                 </div>
             </div>
             
-            <!-- Pantalla de Devolución Parcial - Escanear Productos -->
+            <!-- Pantalla Devolución Parcial Escaneo -->
             <div id="devolucion-parcial-scan-screen" class="screen">
-                <header id="devolucion-parcial-header">
-                    <h1 class="title">Escanea los productos a devolver</h1>
-                </header>
+                <div id="devolucion-parcial-header">
+                    <header>
+                        <h1 class="title">Comienza la devolución</h1>
+                    </header>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="devolucion-escanear-btn">Escanear producto</button>
+                        <button class="btn btn-secondary" id="devolucion-sku-btn">Ingresar SKU</button>
+                        <button class="btn btn-tertiary" id="devolucion-parcial-cancelar-btn">Cancelar</button>
+                    </div>
+                </div>
                 <div id="devolucion-parcial-list-container" class="devolucion-parcial-content">
-                    <!-- Scanned products will appear here -->
+                    <!-- Productos para devolver se inyectarán aquí -->
                 </div>
                 <div class="screen-footer">
-                     <button class="btn btn-primary" id="devolucion-escanear-btn">Escanear producto</button>
-                     <button class="btn btn-secondary" id="devolucion-sku-btn">Ingresar SKU</button>
-                     <button class="btn btn-secondary" id="devolucion-parcial-cancelar-btn">Cancelar</button>
-                     <div class="split-buttons hidden" id="devolucion-parcial-split-actions">
-                         <button class="btn btn-secondary" id="devolucion-parcial-cancelar-split-btn">Cancelar</button>
-                         <button class="btn btn-secondary" id="devolucion-parcial-continuar-btn">Continuar</button>
-                     </div>
+                    <div id="devolucion-parcial-split-actions" class="split-buttons hidden">
+                        <button class="btn btn-secondary" id="devolucion-parcial-cancelar-split-btn">Cancelar</button>
+                        <button class="btn btn-primary" id="devolucion-parcial-continuar-btn">Continuar</button>
+                    </div>
                 </div>
             </div>
-
+            
             <!-- Pantalla de Cancelaciones -->
             <div id="cancelaciones-screen" class="screen">
-                <header class="screen-header">
+                 <header class="screen-header">
                     <button class="back-btn" id="cancelaciones-back-btn" aria-label="Regresar">
                         <span class="material-symbols-outlined">arrow_back</span>
                     </button>
                     <h1 class="screen-title">Cancelaciones</h1>
                 </header>
                 <div class="cancellations-content">
-                    <h2>Realiza la búsqueda de la compra que deseas cancelar</h2>
+                    <h2>Busca la compra a cancelar</h2>
                     <div class="info-alert">
-                        <p>La cancelación solo se permite en la misma terminal y el mismo día de la compra.</p>
+                        <p>La cancelación solo puede realizarse el mismo día de la compra y en la misma terminal.</p>
                     </div>
                     <div class="search-group">
-                        <input type="text" placeholder="No. de transacción (STAN)" aria-label="Número de transacción STAN">
+                        <input type="text" placeholder="No. de Transacción (STAN)">
                         <button class="search-btn" id="search-transaction-btn" aria-label="Buscar transacción">
                             <span class="material-symbols-outlined">search</span>
                         </button>
                     </div>
-                    <div id="search-result-container" class="search-result hidden">
-                        <div class="search-result-details">
-                            <p>No. de Transacción: 32</p>
-                            <p>Terminal: 21</p>
-                            <p>Empleado: 22</p>
-                        </div>
-                        <div class="search-result-actions">
-                            <p>12/11/2024 12:21</p>
-                            <p class="amount">$323.23</p>
-                            <button class="btn btn-secondary btn-cancel" id="cancel-found-transaction-btn">Cancelar</button>
+                    <div id="search-result-container" class="hidden">
+                        <hr class="divider">
+                        <div class="search-result">
+                            <div class="search-result-details">
+                                <p>No. de Transacción: 22</p>
+                                <p>Terminal: 22</p>
+                                <p>12/11/2024</p>
+                            </div>
+                            <div class="search-result-actions">
+                                <p>Monto:</p>
+                                <p class="amount">$323.23</p>
+                                <button class="btn btn-primary btn-cancel" id="cancel-found-transaction-btn">Cancelar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-             <!-- Pantalla de Administración -->
-            <div id="administracion-screen" class="screen">
-                <header>
-                    <h1 class="title">Reporte de ventas</h1>
-                    <p class="subtitle">Visualiza los detalles de una compra al seleccionarla o imprime un reporte de todas las compras.</p>
-                </header>
-                <div class="transaction-list">
-                    <div class="transaction-item">
-                        <div class="transaction-details">
-                            <p>No. de Tansacción: 32</p>
-                            <p>Terminal: 21</p>
-                            <p>Empleado: 22</p>
-                        </div>
-                        <div class="transaction-info">
-                            <p>12/11/2024 12:21</p>
-                            <p class="amount">$5,153.00</p>
-                        </div>
-                    </div>
-                    <hr class="divider">
-                    <div class="transaction-item">
-                        <div class="transaction-details">
-                            <p>No. de Tansacción: 32</p>
-                            <p>Terminal: 21</p>
-                            <p>Empleado: 22</p>
-                        </div>
-                        <div class="transaction-info">
-                            <p>12/11/2024 12:21</p>
-                            <p class="amount">$5,153.00</p>
-                        </div>
-                    </div>
-                    <hr class="divider">
-                    <div class="transaction-item">
-                        <div class="transaction-details">
-                            <p>No. de Tansacción: 32</p>
-                            <p>Terminal: 21</p>
-                            <p>Empleado: 22</p>
-                        </div>
-                        <div class="transaction-info">
-                            <p>12/11/2024 12:21</p>
-                            <p class="amount">$5,153.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="report-footer">
-                    <button class="btn btn-primary">Imprimir reporte</button>
-                </div>
-            </div>
         </main>
+        
         <nav class="bottom-nav">
             <button class="nav-item active" data-target="compra-screen" aria-current="page">
                 <div class="nav-icon-container">
-                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <span class="material-symbols-outlined">store</span>
                 </div>
                 <span class="nav-label">Compra</span>
             </button>
             <button class="nav-item" data-target="operaciones-screen">
-                 <div class="nav-icon-container">
-                    <span class="material-symbols-outlined">receipt_long</span>
+                <div class="nav-icon-container">
+                    <span class="material-symbols-outlined">sync_alt</span>
                 </div>
                 <span class="nav-label">Operaciones</span>
             </button>
-            <button class="nav-item" data-target="administracion-screen">
+            <button class="nav-item" data-target="reportes-screen">
                 <div class="nav-icon-container">
-                    <span class="material-symbols-outlined">bar_chart</span>
+                    <span class="material-symbols-outlined">summarize</span>
                 </div>
-                <span class="nav-label">Administración</span>
+                <span class="nav-label">Reportes</span>
             </button>
             <button class="nav-item" id="logout-nav-item">
                 <div class="nav-icon-container">
                     <span class="material-symbols-outlined">logout</span>
                 </div>
-                <span class="nav-label">Cerrar sesión</span>
+                <span class="nav-label">Salir</span>
             </button>
         </nav>
     </div>
 
+    <!-- Modals -->
     <div id="modal-overlay" class="modal-overlay"></div>
-
+    
+    <!-- Logout Modal -->
     <div id="logout-modal" class="modal">
         <div class="modal-handle"></div>
-        <h2 class="modal-title">¿Seguro que quieres cerrar la sesión?</h2>
+        <h2 class="modal-title">¿Estás seguro de que deseas salir?</h2>
         <div class="modal-actions">
-            <button class="btn btn-primary" id="confirm-logout-btn">Cerrar sesión</button>
-            <button class="btn btn-secondary" id="cancel-logout-btn">Regresar</button>
+            <button class="btn btn-primary" id="confirm-logout-btn">Salir</button>
+            <button class="btn btn-secondary" id="cancel-logout-btn">Cancelar</button>
         </div>
     </div>
     
-    <div id="sku-modal" class="modal">
+    <!-- Cancel Purchase Modal -->
+    <div id="cancel-purchase-modal" class="modal">
         <div class="modal-handle"></div>
-        <p class="modal-instructions">
-            Ingresa el SKU de cada producto, presiona en “Agregar producto”, cuando hayas acabado presiona “Finalizar”.
-        </p>
-        <div class="input-group">
-            <input type="text" id="sku-input" placeholder="SKU">
-        </div>
-        <div id="sku-added-container" class="hidden">
-            <h3 class="sku-added-title">Productos agregados:</h3>
-            <div id="sku-pills-container">
-                <!-- Pills will be injected here -->
-            </div>
-        </div>
+        <h2 class="modal-title">¿Deseas cancelar la compra?</h2>
         <div class="modal-actions">
-            <button class="btn btn-primary" id="add-sku-product-btn">Agregar producto</button>
-            <button class="btn btn-secondary hidden" id="add-sku-to-cart-btn">Agregar productos al carrito</button>
+            <button class="btn btn-primary" id="confirm-cancel-btn">Sí, cancelar</button>
+            <button class="btn btn-secondary" id="continue-purchase-btn">No, continuar comprando</button>
         </div>
     </div>
 
+    <!-- SKU Modal -->
+    <div id="sku-modal" class="modal">
+        <div class="modal-handle"></div>
+        <h2 class="modal-title">Ingresa el SKU</h2>
+        <p class="modal-instructions">Agrega el SKU de cada producto y presiona “Agregar producto”.</p>
+        <div class="input-group">
+            <input type="text" id="sku-input" placeholder="Ingresar SKU">
+        </div>
+        <div id="sku-added-container" class="hidden">
+            <h3 class="sku-added-title">Agregados:</h3>
+            <div id="sku-pills-container"></div>
+        </div>
+        <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" id="add-sku-product-btn" disabled>Agregar producto</button>
+            <button type="button" class="btn btn-primary hidden" id="add-sku-to-cart-btn">Agregar al carrito</button>
+        </div>
+    </div>
+
+    <!-- Consultar Producto Modal -->
     <div id="consultar-producto-modal" class="modal">
         <div class="modal-handle"></div>
         <div class="consultar-modal-content">
-            <h2 class="modal-title">¿Cómo quieres consultar el artículo?</h2>
-            <button class="btn btn-primary" id="consultar-escanear-btn">Escanear producto</button>
-            <hr class="modal-divider">
+            <h2 class="modal-title">¿Cómo deseas consultar el producto?</h2>
+            <button class="btn btn-secondary" id="consultar-escanear-btn">Escanear producto</button>
             <div class="input-group">
-                <input type="text" id="consultar-sku-input" placeholder="SKU">
+                <input type="text" id="consultar-sku-input" placeholder="Ingresar SKU">
             </div>
-            <button class="btn btn-primary" id="consultar-sku-btn">Consultar con SKU</button>
-            <button class="btn btn-secondary" id="consultar-cancelar-btn">Cancelar</button>
+            <button class="btn btn-secondary" id="consultar-sku-btn">Consultar por SKU</button>
+            <hr class="modal-divider">
+            <button class="btn btn-tertiary" id="consultar-cancelar-btn">Cancelar</button>
         </div>
     </div>
     
-    <div id="cancel-purchase-modal" class="modal">
-        <div class="modal-handle"></div>
-        <h2 class="modal-title">¿Estás seguro de cancelar la compra?</h2>
-        <div class="modal-actions">
-            <button class="btn btn-primary" id="confirm-cancel-btn">Cancelar compra</button>
-            <button class="btn btn-secondary" id="continue-purchase-btn">Continuar compra</button>
-        </div>
-    </div>
-
+    <!-- Cancellation Confirmation Modal -->
     <div id="cancellation-confirmation-modal" class="modal">
         <div class="modal-handle"></div>
-        <p class="modal-confirmation-text">¿Estás seguro de que deseas realizar la cancelación? Este paso es irreversible.</p>
+        <h2 class="modal-confirmation-text">¿Estás seguro de que deseas cancelar la transacción 22 por un monto de $323.23?</h2>
         <div class="modal-actions">
-            <button class="btn btn-primary" id="confirm-cancellation-btn">Cancelar compra</button>
+            <button class="btn btn-primary" id="confirm-cancellation-btn">Sí, cancelar</button>
             <button class="btn btn-secondary" id="go-back-from-cancellation-btn">Regresar</button>
         </div>
     </div>
 
+    <!-- Cancel Return Modal -->
     <div id="cancel-return-modal" class="modal">
         <div class="modal-handle"></div>
-        <p class="modal-confirmation-text">¿Estás seguro de cancelar la devolución?</p>
+        <h2 class="modal-title">¿Deseas cancelar la devolución?</h2>
         <div class="modal-actions">
-            <button class="btn btn-primary" id="confirm-cancel-return-btn">Cancelar devolución</button>
-            <button class="btn btn-secondary" id="go-back-from-return-btn">Regresar</button>
+            <button class="btn btn-primary" id="confirm-cancel-return-btn">Sí, cancelar</button>
+            <button class="btn btn-secondary" id="go-back-from-return-btn">No, regresar</button>
         </div>
     </div>
-
+    
+    <!-- Camera View -->
     <div id="camera-view" class="camera-overlay hidden">
         <video id="camera-feed" autoplay playsinline></video>
     </div>
-
+    
     <script type="module" src="index.tsx"></script>
 </body>
 </html>

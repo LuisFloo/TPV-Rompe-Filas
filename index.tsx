@@ -1,5 +1,4 @@
 
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -29,6 +28,12 @@ interface ReturnTransaction {
     amount: number;
 }
 
+interface SaleTransaction {
+    transactionId: string;
+    date: string;
+    amount: number;
+}
+
 // Mock Data
 const MOCK_PRODUCTS: Product[] = [
     { id: 1242, name: 'Playera Azul', price: 300.50 },
@@ -47,6 +52,14 @@ const MOCK_RETURN_TRANSACTIONS: ReturnTransaction[] = [
     { transactionId: '32', terminal: '21', employee: '22', date: '12/11/2024 12:21', amount: 5153.00 },
     { transactionId: '32', terminal: '66', employee: '543', date: '15/11/2024 12:21', amount: 754.23 },
     { transactionId: '32', terminal: '42', employee: '212', date: '16/11/2024 12:21', amount: 643.23 },
+];
+
+const MOCK_SALES_TRANSACTIONS: SaleTransaction[] = [
+    { transactionId: '101', date: '17/11/2024 10:15', amount: 450.50 },
+    { transactionId: '102', date: '17/11/2024 11:30', amount: 1200.00 },
+    { transactionId: '103', date: '17/11/2024 14:45', amount: 875.25 },
+    { transactionId: '104', date: '17/11/2024 16:20', amount: 3250.00 },
+    { transactionId: '105', date: '17/11/2024 18:05', amount: 150.75 },
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -96,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const skuInput = document.getElementById('sku-input') as HTMLInputElement;
     const skuAddedContainer = document.getElementById('sku-added-container');
     const skuPillsContainer = document.getElementById('sku-pills-container');
-    const addSkuProductBtn = document.getElementById('add-sku-product-btn');
+    const addSkuProductBtn = document.getElementById('add-sku-product-btn') as HTMLButtonElement;
     const addSkuToCartBtn = document.getElementById('add-sku-to-cart-btn');
 
     // Consultar Producto Modal elements
@@ -192,6 +205,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmCancelReturnBtn = document.getElementById('confirm-cancel-return-btn');
     const goBackFromReturnBtn = document.getElementById('go-back-from-return-btn');
 
+    // Reports screen elements
+    const reportListContainer = document.getElementById('report-list-container');
+    const reportTotalAmountEl = document.getElementById('report-total-amount');
+
     // Camera elements
     const cameraView = document.getElementById('camera-view');
     const cameraFeed = document.getElementById('camera-feed') as HTMLVideoElement;
@@ -203,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let cameraMode: 'purchase' | 'consultation' | 'return' = 'purchase';
     let skuProducts: Product[] = [];
     let currentProductForDetails: Product | null = null;
+    let currentItemForPromotion: CartItem | null = null;
     let currentTransactionForReturn: ReturnTransaction | null = null;
     let isCheckoutView = false;
     let currentReturnMode: 'total' | 'partial' = 'total';
@@ -245,6 +263,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetNavItem) {
             targetNavItem.classList.add('active');
             targetNavItem.setAttribute('aria-current', 'page');
+        }
+
+        if (targetId === 'reportes-screen') {
+            renderReports();
         }
     }
 
@@ -302,11 +324,81 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = shoppingCart.find(i => i.product.id === productId);
 
         if (item && promoProductTitle && promoProductSku && promoProductPrice) {
+            currentItemForPromotion = item;
+
             promoProductTitle.textContent = item.product.name;
             promoProductSku.textContent = item.product.id.toString();
             promoProductPrice.textContent = `${currencyFormatter.format(item.product.price)} MXN`;
+
+            // Set radio button state
+            const discountRadios = document.querySelectorAll('#promotions-screen input[name="discount"]') as NodeListOf<HTMLInputElement>;
+            let matchingRadioFound = false;
+
+            if (item.discount) {
+                for (const radio of discountRadios) {
+                    const label = radio.closest('.discount-option');
+                    const tag = label?.querySelector('.discount-tag');
+                    if (tag && tag.textContent === item.discount.description) {
+                        radio.checked = true;
+                        matchingRadioFound = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!matchingRadioFound) {
+                const noneRadio = document.querySelector('#promotions-screen input[name="discount"][value="none"]') as HTMLInputElement;
+                if (noneRadio) noneRadio.checked = true;
+            }
+
             showScreen('promotions-screen');
         }
+    }
+
+    function applyPromotionAndGoBack() {
+        if (!currentItemForPromotion) {
+            isCheckoutView = true;
+            renderCart();
+            showScreen('compra-screen');
+            return;
+        }
+
+        const selectedRadio = document.querySelector('#promotions-screen input[name="discount"]:checked') as HTMLInputElement;
+
+        if (!selectedRadio || selectedRadio.value === 'none') {
+            currentItemForPromotion.discount = undefined;
+        } else {
+            const value = selectedRadio.value;
+            const label = selectedRadio.closest('.discount-option');
+            const description = label?.querySelector('.discount-tag')?.textContent || 'Descuento';
+
+            const itemSubtotal = currentItemForPromotion.product.price * currentItemForPromotion.quantity;
+            let percentage = 0;
+
+            if (value.startsWith('amount-')) {
+                const amount = parseFloat(value.replace('amount-', ''));
+                if (itemSubtotal > 0) {
+                    percentage = (amount / itemSubtotal) * 100;
+                }
+            } else {
+                percentage = parseFloat(value);
+            }
+
+            currentItemForPromotion.discount = {
+                percentage: isNaN(percentage) ? 0 : percentage,
+                description: description
+            };
+        }
+
+        const itemIndex = shoppingCart.findIndex(item => item.product.id === currentItemForPromotion!.product.id);
+        if (itemIndex > -1) {
+            shoppingCart[itemIndex] = currentItemForPromotion;
+        }
+
+        currentItemForPromotion = null;
+        isCheckoutView = true;
+        renderCart();
+        showScreen('compra-screen');
     }
 
 
@@ -352,6 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
              skuProducts.push(randomProduct);
         }
         if (skuInput) skuInput.value = '';
+        if (addSkuProductBtn) addSkuProductBtn.disabled = true;
         renderSkuPills();
     }
     
@@ -381,6 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         skuProducts = [];
         if (skuInput) skuInput.value = '';
+        if (addSkuProductBtn) addSkuProductBtn.disabled = true;
         renderSkuPills();
     }
 
@@ -802,6 +896,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Reports Logic ---
+    function renderReports() {
+        if (!reportListContainer || !reportTotalAmountEl) return;
+
+        reportListContainer.innerHTML = '';
+        let totalSales = 0;
+
+        MOCK_SALES_TRANSACTIONS.forEach(tx => {
+            totalSales += tx.amount;
+            const itemEl = document.createElement('div');
+            itemEl.className = 'transaction-item';
+            itemEl.innerHTML = `
+                <div class="transaction-details">
+                    <p>No. de Transacción: ${tx.transactionId}</p>
+                    <p>${tx.date}</p>
+                </div>
+                <div class="transaction-info">
+                    <p class="amount">${currencyFormatter.format(tx.amount)}</p>
+                </div>
+            `;
+            reportListContainer.appendChild(itemEl);
+        });
+
+        reportTotalAmountEl.textContent = currencyFormatter.format(totalSales);
+    }
+
     // --- Camera Logic ---
     async function openCamera() {
         if (!cameraView || !cameraFeed) return;
@@ -889,6 +1009,11 @@ document.addEventListener('DOMContentLoaded', () => {
         cameraMode = 'purchase';
         showSkuModal();
     });
+    skuInput?.addEventListener('input', () => {
+        if (addSkuProductBtn) {
+            addSkuProductBtn.disabled = skuInput.value.trim() === '';
+        }
+    });
     addSkuProductBtn?.addEventListener('click', addSkuProduct);
     addSkuToCartBtn?.addEventListener('click', addSkuProductsToCart);
 
@@ -925,8 +1050,13 @@ document.addEventListener('DOMContentLoaded', () => {
     regresarBtn?.addEventListener('click', () => showScreen('compra-screen'));
     addToCartDetailsBtn?.addEventListener('click', addProductFromDetails);
     
-    const backToCompra = () => showScreen('compra-screen');
-    cambiarPromocionBtn?.addEventListener('click', backToCompra);
+    const backToCompra = () => {
+        currentItemForPromotion = null; // Always clear state on cancel
+        isCheckoutView = true;
+        renderCart();
+        showScreen('compra-screen');
+    };
+    cambiarPromocionBtn?.addEventListener('click', applyPromotionAndGoBack);
     regresarPromoBtn?.addEventListener('click', backToCompra);
     
     // Payment screen listeners
